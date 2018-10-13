@@ -7,7 +7,7 @@
  *  (C) Copyright 2017 GoPro Inc (http://gopro.com/).
  *
  *  Licensed under either:
- *  - Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0  
+ *  - Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0
  *  - MIT license, http://opensource.org/licenses/MIT
  *  at your option.
  *
@@ -144,9 +144,9 @@ THREAD_API(GetTick)(uint32_t *tick)
 
 #include "pthread.h"
 
-#if __APPLE__
-#include "macdefs.h"
-#endif
+// #if __APPLE__
+// #include "macdefs.h"
+// #endif
 
 // Macro for declaring routines in the threads API
 #define THREAD_API(proc) \
