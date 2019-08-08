@@ -583,8 +583,9 @@ void AppendFormattedMetadata(device_metadata *dm, uint32_t *formatted, uint32_t 
 
 	if(!GPMF_VALID_FOURCC(tag)) return;
 	
-	if(!(flags & GPMF_FLAGS_LOCKED))  // Use this internal flags if called within a Lock()
+	if(!(flags & GPMF_FLAGS_LOCKED)) {  // Use this internal flags if called within a Lock()
 		Lock(&dm->device_lock);
+	}
 
 	if(microSecondTimeStamp != 0 && flags & GPMF_FLAGS_STORE_ALL_TIMESTAMPS)
 	{
@@ -602,7 +603,8 @@ void AppendFormattedMetadata(device_metadata *dm, uint32_t *formatted, uint32_t 
 		buf[3] = swap64timestamp[1];
 		buf[4] = GPMF_KEY_END;
 		
-		AppendFormattedMetadata(dm, buf, 16, stampflags, 1, 0); // Timing is Sticky, only one value per data stream, it is simpy updated if sent more than once.	
+		// \AMM Force _not locking_ when you recurse.
+		AppendFormattedMetadata(dm, buf, 16, stampflags | GPMF_FLAGS_LOCKED, 1, 0); // Timing is Sticky, only one value per data stream, it is simpy updated if sent more than once.	
 	}
 	
 again:
